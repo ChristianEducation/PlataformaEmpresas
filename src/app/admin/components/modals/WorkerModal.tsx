@@ -37,7 +37,13 @@ export function WorkerModal({ isOpen, editingWorker, onClose, onSubmit }: Worker
           onSubmit={(e) => {
             e.preventDefault()
             const formData = new FormData(e.currentTarget)
-            const workerData: any = {
+            const workerData: {
+              nombre_completo: string
+              empresa: string
+              tipo_minuta: number
+              rol: string
+              contraseña?: string
+            } = {
               nombre_completo: formData.get("nombre_completo") as string,
               empresa: formData.get("empresa") as string,
               tipo_minuta: Number.parseInt(formData.get("tipo_minuta") as string) || 1,
