@@ -10,13 +10,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card"
 import { Users, Search, Filter, Plus, Edit, Trash2, Eye, EyeOff, Upload } from "lucide-react"
 import { Input } from "@/components/ui/Input"
 import { Button } from "@/components/ui/Button"
+import type { Trabajador } from "@/types/database"
 
 export default function TrabajadoresPage() {
   const [workerSearchTerm, setWorkerSearchTerm] = useState("")
   const [workerCompanyFilter, setWorkerCompanyFilter] = useState("all")
   const [showWorkerModal, setShowWorkerModal] = useState(false)
   const [showImportModal, setShowImportModal] = useState(false)
-  const [editingWorker, setEditingWorker] = useState<any>(null)
+  const [editingWorker, setEditingWorker] = useState<Trabajador | null>(null)
   const [visiblePasswords, setVisiblePasswords] = useState<Set<number>>(new Set())
 
   const { trabajadores, loadingTrabajadores, fetchAllData } = useAdminData(new Date().toISOString().split("T")[0])
