@@ -59,7 +59,7 @@ export function ImportExcelModal({ isOpen, onClose, onImport }: ImportExcelModal
       setWorkers([])
       setErrors([])
       setTipoMinuta(1)
-    } catch (error) {
+    } catch {
       setErrors(["Error al importar trabajadores. Intenta nuevamente."])
     } finally {
       setIsProcessing(false)
