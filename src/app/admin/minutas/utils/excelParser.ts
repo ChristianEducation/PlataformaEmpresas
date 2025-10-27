@@ -29,6 +29,7 @@ export async function parseExcelToMenus(file: File, month: number, year: number,
         const data = e.target?.result
         const workbook = XLSX.read(data, { type: "binary" })
         const firstSheet = workbook.Sheets[workbook.SheetNames[0]]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 }) as any[][]
 
         if (jsonData.length < 2) {
