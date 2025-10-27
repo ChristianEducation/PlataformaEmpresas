@@ -104,13 +104,6 @@ export default function CocinaPage() {
     })
   }
 
-  const getTop3 = (opciones: Array<{ descripcion: string; cantidadTotal: number }>) => {
-    return opciones
-      .slice(0, 3)
-      .map((o) => `${o.descripcion} (${o.cantidadTotal})`)
-      .join(" • ")
-  }
-
   const handleExportWeek = async () => {
     try {
       await exportCocinaWeek(weekDates, trabajadores)
