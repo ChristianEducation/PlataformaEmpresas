@@ -44,7 +44,13 @@ export function useWorkerManagement(onSuccess?: () => void) {
 
   const handleUpdateWorker = async (workerId: number, workerData: WorkerData) => {
     try {
-      const updateData: any = {
+      const updateData: Partial<{
+        nombre_completo: string
+        empresa: string
+        tipo_minuta: number
+        contraseña: string
+        rol: string
+      }> = {
         nombre_completo: workerData.nombre_completo,
         empresa: workerData.empresa,
         tipo_minuta: workerData.tipo_minuta,
