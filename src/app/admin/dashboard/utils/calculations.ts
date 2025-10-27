@@ -1,7 +1,7 @@
-import type { Pedido } from "@/types/database"
+import type { Pedido, Trabajador } from "@/types/database"
 import type { DashboardMetrics, TopOpcion, EmpresaStats } from "../types"
 
-export function calculateDashboardMetrics(pedidos: Pedido[], trabajadores: any[]): DashboardMetrics {
+export function calculateDashboardMetrics(pedidos: Pedido[], trabajadores: Trabajador[]): DashboardMetrics {
   const totalPedidos = pedidos.length
 
   // Trabajadores únicos que tienen pedidos
