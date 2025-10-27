@@ -20,6 +20,7 @@ export async function parseExcelFile(file: File): Promise<ParseResult> {
         const workbook = XLSX.read(data, { type: "binary" })
         const sheetName = workbook.SheetNames[0]
         const worksheet = workbook.Sheets[sheetName]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][]
 
         const workers: ParsedWorker[] = []
@@ -61,7 +62,7 @@ export async function parseExcelFile(file: File): Promise<ParseResult> {
         }
 
         resolve({ workers, errors })
-      } catch (error) {
+      } catch {
         resolve({
           workers: [],
           errors: ["Error al leer el archivo Excel. Verifica que el formato sea correcto."],
