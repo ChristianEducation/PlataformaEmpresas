@@ -104,7 +104,7 @@ export default function CocinaPage() {
     })
   }
 
-  const getTop3 = (opciones: any[]) => {
+  const getTop3 = (opciones: Array<{ descripcion: string; cantidadTotal: number }>) => {
     return opciones
       .slice(0, 3)
       .map((o) => `${o.descripcion} (${o.cantidadTotal})`)
@@ -138,7 +138,10 @@ export default function CocinaPage() {
     )
   }
 
-  const renderOpcion = (opcion: any, minutaKey: string) => {
+  const renderOpcion = (
+    opcion: { descripcion: string; cantidadTotal: number; porEmpresa: Array<{ empresa: string; cantidad: number }> },
+    minutaKey: string,
+  ) => {
     const key = `${minutaKey}-${opcion.descripcion}`
     const isExpanded = expandedItems.has(key)
 
@@ -172,7 +175,7 @@ export default function CocinaPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-slate-200">
-                  {opcion.porEmpresa.map((empresa: any, idx: number) => (
+                  {opcion.porEmpresa.map((empresa, idx: number) => (
                     <tr key={idx} className="hover:bg-slate-50 transition-colors">
                       <td className="px-4 py-3 text-sm text-slate-900">{empresa.empresa}</td>
                       <td className="px-4 py-3 text-sm text-emerald-600 font-semibold">{empresa.cantidad}</td>
@@ -187,7 +190,7 @@ export default function CocinaPage() {
     )
   }
 
-  const renderSimplifiedSummary = (minuta: any[]) => {
+  const renderSimplifiedSummary = (minuta: Array<{ descripcion: string; cantidadTotal: number }>) => {
     if (minuta.length === 0) {
       return (
         <div className="text-center py-4">
@@ -346,8 +349,6 @@ export default function CocinaPage() {
         <div className="space-y-2">
           {resumenesPorDia.map(({ fecha, resumen }) => {
             const isExpanded = expandedDays.has(fecha)
-            const top3Minuta1 = getTop3(resumen.minuta1)
-            const top3Minuta2 = getTop3(resumen.minuta2)
             const top3Combined = [
               ...resumen.minuta1.slice(0, 2).map((o) => `${o.descripcion} (${o.cantidadTotal})`),
               ...resumen.minuta2.slice(0, 1).map((o) => `${o.descripcion} (${o.cantidadTotal})`),
