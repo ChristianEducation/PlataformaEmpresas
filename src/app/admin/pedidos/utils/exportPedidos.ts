@@ -38,7 +38,7 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     const worksheet = workbook.addWorksheet(empresa.length > 31 ? empresa.substring(0, 31) : empresa)
 
     const titleRow = worksheet.addRow([`📋 PEDIDOS - ${empresa.toUpperCase()}`])
-    worksheet.mergeCells(`A${titleRow.number}:B${titleRow.number}`)
+    worksheet.mergeCells(`A${titleRow.number}:D${titleRow.number}`)
     titleRow.getCell(1).font = { bold: true, color: { argb: "FFFFFFFF" }, size: 14 }
     titleRow.getCell(1).fill = {
       type: "pattern",
@@ -49,7 +49,7 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     titleRow.height = 25
 
     const dateRow = worksheet.addRow([`Fecha: ${dateFormatted}`])
-    worksheet.mergeCells(`A${dateRow.number}:B${dateRow.number}`)
+    worksheet.mergeCells(`A${dateRow.number}:D${dateRow.number}`)
     dateRow.getCell(1).fill = {
       type: "pattern",
       pattern: "solid",
@@ -58,7 +58,7 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     dateRow.getCell(1).font = { size: 11 }
 
     const totalRow = worksheet.addRow([`Total: ${pedidosOrdenados.length} pedidos`])
-    worksheet.mergeCells(`A${totalRow.number}:B${totalRow.number}`)
+    worksheet.mergeCells(`A${totalRow.number}:D${totalRow.number}`)
     totalRow.getCell(1).fill = {
       type: "pattern",
       pattern: "solid",
@@ -69,7 +69,7 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     // Línea vacía
     worksheet.addRow([])
 
-    const headerRow = worksheet.addRow(["👤 Nombre Trabajador", "🍽️ Opción Elegida"])
+    const headerRow = worksheet.addRow(["👤 Nombre Trabajador", "📂 Categoría Opción", "🍽️ Opción Elegida", "📝 Notas"])
     headerRow.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 12 }
     headerRow.alignment = { horizontal: "center", vertical: "middle" }
     headerRow.height = 20
@@ -89,7 +89,7 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     })
 
     pedidosOrdenados.forEach((pedido, index) => {
-      const row = worksheet.addRow([pedido.nombre_trabajador, pedido.descripcion_opcion])
+      const row = worksheet.addRow([pedido.nombre_trabajador, pedido.categoria_opcion, pedido.descripcion_opcion, ""])
 
       const bgColor = index % 2 === 0 ? "FFF2F2F2" : "FFFFFFFF"
 
@@ -112,7 +112,9 @@ export async function exportarPedidosPorEmpresa(pedidos: Pedido[], fecha: string
     })
 
     worksheet.getColumn(1).width = 30 // Nombre trabajador
-    worksheet.getColumn(2).width = 40 // Opción elegida
+    worksheet.getColumn(2).width = 25 // Categoría Opción
+    worksheet.getColumn(3).width = 40 // Opción elegida
+    worksheet.getColumn(4).width = 30 // Notas
   })
 
   const buffer = await workbook.xlsx.writeBuffer()
